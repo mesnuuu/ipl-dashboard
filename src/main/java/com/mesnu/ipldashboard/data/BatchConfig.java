@@ -61,24 +61,24 @@ public class BatchConfig {
 	}
 
 	@Bean
-    public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
-        return jobBuilderFactory
-            .get("importUserJob")
-            .incrementer(new RunIdIncrementer())
-            .listener(listener)
-            .flow(step1)
-            .end()
-            .build();
-    }
+	public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
+		return jobBuilderFactory
+				.get("importUserJob")
+				.incrementer(new RunIdIncrementer())
+				.listener(listener)
+				.flow(step1)
+				.end()
+				.build();
+	}
 
-    @Bean
-    public Step step1(JdbcBatchItemWriter<Match> writer) {
-        return stepBuilderFactory
-            .get("step1")
-            .<MatchInput, Match>chunk(10)
-            .reader(reader())
-            .processor(processor())
-            .writer(writer)
-            .build();
-    }
+	@Bean
+	public Step step1(JdbcBatchItemWriter<Match> writer) {
+		return stepBuilderFactory
+				.get("step1")
+				.<MatchInput, Match>chunk(10)
+				.reader(reader())
+				.processor(processor())
+				.writer(writer)
+				.build();
+	}
 }
