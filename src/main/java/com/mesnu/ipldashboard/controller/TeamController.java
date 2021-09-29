@@ -5,15 +5,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mesnu.ipldashboard.model.Team;
+import com.mesnu.ipldashboard.repository.MatchRepository;
 import com.mesnu.ipldashboard.repository.TeamRepository;
 
 @RestController
 public class TeamController {
 	
 	private TeamRepository teamRepository;
+	private MatchRepository matchRepository;
 	
-	public TeamController(TeamRepository teamRepository) {
+	public TeamController(TeamRepository teamRepository, MatchRepository matchRepository) {
 		this.teamRepository = teamRepository;
+		this.matchRepository = matchRepository;
 	}
 
 
@@ -21,8 +24,10 @@ public class TeamController {
 	@GetMapping("/team/{teamName}")
 	public Team getTeam(@PathVariable String teamName){
 		
-		return this.teamRepository.findByTeamName(teamName);
+		Team team = this.teamRepository.findByTeamName(teamName);
+		team.setMatches(matchRepository.getByTeam1OrTeam2OrderByDateDesc(teamName, teamName));
 		
+		return team;
 	}
 	
 }
