@@ -28,8 +28,7 @@ public class TeamController {
 		
 		Team team = this.teamRepository.findByTeamName(teamName);
 		
-		Pageable pageable = PageRequest.of(0,4);
-		team.setMatches(matchRepository.getByTeam1OrTeam2OrderByDateDesc(teamName, teamName, pageable));
+		team.setMatches(matchRepository.findLatestMatchByTeam(teamName, 3));
 		
 		return team;
 	}
