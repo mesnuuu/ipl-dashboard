@@ -28,7 +28,7 @@ public class TeamController {
 		
 		Team team = this.teamRepository.findByTeamName(teamName);
 		
-		team.setMatches(matchRepository.findLatestMatchByTeam(teamName, 3));
+		team.setMatches(matchRepository.findLatestMatchByTeam(teamName, 4));
 		
 		return team;
 	}
