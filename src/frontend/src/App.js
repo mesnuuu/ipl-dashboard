@@ -1,13 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import './App.css';
+import { TeamPage } from './pages/TeamPage';
+
+
+function App()
+{
   return (
     <div className="App">
-       
-        <p>
-          Edit  and save to reload.
-        </p>
+
+      <TeamPage />
 
     </div>
   );
