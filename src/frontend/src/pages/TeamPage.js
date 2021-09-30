@@ -1,11 +1,11 @@
-import{ React, useEffect} from "react";
+import{ React, useEffect, useState } from "react";
 import { MatchDetailCard } from "../components/MatchDetailCard";
 import { MatchSmallCard } from "../components/MatchSmallCard";
 
 
 export const TeamPage = () =>
 {
-
+    const [team, setTeam] = useState();
 
 
     useEffect(
@@ -13,7 +13,7 @@ export const TeamPage = () =>
             const fetchMatches = async () => {
                 const response = await fetch('http://localhost:8080/team/Chennai%20Super%20Kings');
                 const data = await response.json();
-                console.log(data);
+                setTeam(data);
             }
             fetchMatches();
 
@@ -27,7 +27,7 @@ export const TeamPage = () =>
     return (
         <div className="TeamPage">
 
-            <h1>Team Name</h1>
+            <h1>{team.teamName}</h1>
             <MatchDetailCard />
             <MatchSmallCard />
             <MatchSmallCard />
