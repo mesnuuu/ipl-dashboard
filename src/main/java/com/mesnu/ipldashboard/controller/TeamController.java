@@ -1,12 +1,15 @@
 package com.mesnu.ipldashboard.controller;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mesnu.ipldashboard.model.Match;
 import com.mesnu.ipldashboard.model.Team;
 import com.mesnu.ipldashboard.repository.MatchRepository;
 import com.mesnu.ipldashboard.repository.TeamRepository;
@@ -34,5 +37,18 @@ public class TeamController {
 		
 		return team;
 	}
+	
+    @GetMapping("/team/{teamName}/matches")
+    public List<Match> getMatchesForTeam(@PathVariable String teamName, @RequestParam int year) {
+    	
+        LocalDate startDate = LocalDate.of(year, 1, 1);
+        LocalDate endDate = LocalDate.of(year + 1, 1, 1);
+        
+        return this.matchRepository.getMatchesByTeamBetweenDates(
+            teamName,
+            startDate,
+            endDate
+            );
+    }
 	
 }
